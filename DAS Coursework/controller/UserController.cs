@@ -1,5 +1,6 @@
 ﻿using System;
 using DAS_Coursework.utils;
+using Spectre.Console;
 
 namespace DAS_Coursework.controller
 {
@@ -80,24 +81,38 @@ namespace DAS_Coursework.controller
         public static void GetDisplayRouteMenu()
         {
             string[] StationOptions = MainController.graph.GetAllVertexNames().Append("Cancel").ToArray();
-            int start = MenuDisplay.GetMenu(StationOptions, new[] { "Find A Route", "Please select your start station:" });
 
-            if (start == StationOptions.Length -1)
+            var startStation = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("Find A Route \nPlease select your start station:?")
+                        .PageSize(20)
+                        .MoreChoicesText("[grey](Move up and down to reveal more stations)[/]")
+                        .AddChoices(StationOptions));
+
+            if (startStation == "Cancel")
             {
                 GetUserMenu();
+                return;
             }
 
-            string[] EndOptions = StationOptions.Where(s => !s.Contains(StationOptions[start])).Append("Cancel").ToArray();
-            int end = MenuDisplay.GetMenu(EndOptions, new[] { "Find A Route", $"Please select your ending station: \n\nStart destination: {StationOptions[start]}" });
-            if (start == StationOptions.Length - 1)
+            string[] EndOptions = StationOptions.Where(s => !s.Contains(startStation)).ToArray();
+            var endStation = AnsiConsole.Prompt(
+                   new SelectionPrompt<string>()
+                       .Title($"Find A Route \nPlease select your ending station: \n\nStart destination: {startStation}")
+                       .PageSize(20)
+                       .MoreChoicesText("[grey](Move up and down to reveal more stations)[/]")
+                       .AddChoices(StationOptions));
+
+            if (endStation == "Cancel")
             {
                 GetUserMenu();
+                return;
             }
 
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine($"\n\nThe fastest route from {StationOptions[start]} to {EndOptions[end]}");
+            Console.WriteLine($"\n\nThe fastest route from {startStation} to {endStation}");
             Console.ResetColor();
-            Dijkstra.ShortestPath(MainController.graph, MainController.graph.FindVertexByName(StationOptions[start]), MainController.graph.FindVertexByName(EndOptions[end]));
+            Dijkstra.ShortestPath(MainController.graph, MainController.graph.FindVertexByName(startStation), MainController.graph.FindVertexByName(endStation));
 
             Console.WriteLine("\nPress enter to go back");
             ConsoleKey pressedKey = Console.ReadKey().Key;
