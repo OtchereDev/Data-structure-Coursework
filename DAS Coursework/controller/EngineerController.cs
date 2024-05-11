@@ -58,7 +58,7 @@ namespace DAS_Coursework.controller
                 return;
             }
 
-            Console.Clear();
+            AnsiConsole.Clear();
             utils.TitleCreator.GetTitle();
             AnsiConsole.WriteLine($"Add A Journey Delay\n \nPlease select your starting station of the journey delay: \n");
             string[] StationOptions = MainController.graph.VerticesConnectedToLine(LineOptions[start]).Append("Cancel").ToArray();
@@ -76,7 +76,7 @@ namespace DAS_Coursework.controller
                 return;
             }
 
-            Console.Clear();
+            AnsiConsole.Clear();
             utils.TitleCreator.GetTitle();
             AnsiConsole.WriteLine($"Add A Journey Delay\n \nPlease select your ending station of the journey delay:  \n");
 
@@ -139,7 +139,7 @@ namespace DAS_Coursework.controller
                 return;
             }
 
-            Console.Clear();
+            AnsiConsole.Clear();
             utils.TitleCreator.GetTitle();
             AnsiConsole.WriteLine($"Add A Journey Delay\n \nPlease select your starting station of the journey delay: \n");
             string[] StationOptions = MainController.graph.VerticesConnectedToLine(LineOptions[start]).Append("Cancel").ToArray();
@@ -157,7 +157,7 @@ namespace DAS_Coursework.controller
                 return;
             }
 
-            Console.Clear();
+            AnsiConsole.Clear();
             utils.TitleCreator.GetTitle();
             AnsiConsole.WriteLine($"Add A Journey Delay\n \nPlease select your ending station of the journey delay:  \n");
 
@@ -292,7 +292,7 @@ namespace DAS_Coursework.controller
                 return;
             }
 
-            Console.Clear();
+            AnsiConsole.Clear();
             utils.TitleCreator.GetTitle();
             AnsiConsole.WriteLine($"Add A Journey Delay\n \nPlease select your starting station of the journey delay: \n");
             string[] StationOptions = MainController.graph.VerticesConnectedToLine(LineOptions[lineIdx]).Append("Cancel").ToArray();
@@ -310,7 +310,7 @@ namespace DAS_Coursework.controller
                 return;
             }
 
-            Console.Clear();
+            AnsiConsole.Clear();
             utils.TitleCreator.GetTitle();
             AnsiConsole.WriteLine($"Add A Journey Delay\n \nPlease select your ending station of the journey delay:  \n");
 
@@ -456,7 +456,7 @@ namespace DAS_Coursework.controller
                 return;
             }
 
-            Console.Clear();
+            AnsiConsole.Clear();
             utils.TitleCreator.GetTitle();
             AnsiConsole.WriteLine($"Open Track\n \nPlease select your starting station of the journey delay: \n");
             string[] StationOptions = MainController.graph.VerticesConnectedToLine(LineOptions[lineIdx]).Append("Cancel").ToArray();
@@ -474,7 +474,7 @@ namespace DAS_Coursework.controller
                 return;
             }
 
-            Console.Clear();
+            AnsiConsole.Clear();
             utils.TitleCreator.GetTitle();
             AnsiConsole.WriteLine($"Open Track\n \nPlease select your ending station of the journey delay:  \n");
 

@@ -157,7 +157,7 @@ namespace DAS_Coursework.data
                     string stationB = GetExcelStringData(reader, 3);
                     double amPeakTime = GetExcelDoubleData(reader, 6);
                     double interPeakTime = GetExcelDoubleData(reader, 7);
-                    double? umimpededTime = GetExcelDoubleData(reader, 5);
+                    double umimpededTime = GetExcelDoubleData(reader, 5);
 
                     var newEntry = new TrainData(line, direction, stationA, stationB, amPeakTime, interPeakTime, umimpededTime);
 

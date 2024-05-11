@@ -19,14 +19,14 @@ namespace DAS_Coursework.models
         public void AddVertex(string vertexName)
         {
             // Check if the vertex with the same name already exists
-            if (FindVertexByName(vertexName) != null)
+            if (FindVertexByName(vertexName) != null || vertexName.Trim() == "")
             {
                 return;
             }
 
             // Resize the vertices array and add the new vertex
             Array.Resize(ref vertices, vertices.Length + 1);
-            vertices[vertices.Length - 1] = new Verticex(vertexName);
+            vertices[vertices.Length - 1] = new Verticex(vertexName.Trim());
         }
 
         public string[] GetAllVertexNames()
@@ -68,10 +68,10 @@ namespace DAS_Coursework.models
         }
 
 
-        public void AddEdge(string line, string fromVertexName, string toVertexName, double weight, string direction)
+        public void AddEdge(string line, string fromVertexName, string toVertexName, double umimpeded, string direction, double amPeak)
         {
-            Verticex fromVertex = FindVertexByName(fromVertexName);
-            Verticex toVertex = FindVertexByName(toVertexName);
+            Verticex fromVertex = FindVertexByName(fromVertexName.Trim());
+            Verticex toVertex = FindVertexByName(toVertexName.Trim());
 
             if (fromVertex == null || toVertex == null)
             {
@@ -79,7 +79,7 @@ namespace DAS_Coursework.models
             }
 
             Array.Resize(ref edges, edges.Length + 1);
-            edges[edges.Length - 1] = new Edge(line, fromVertex, toVertex, weight, direction);
+            edges[edges.Length - 1] = new Edge(line.Trim(), fromVertex, toVertex, umimpeded == 0 ? amPeak : umimpeded, direction);
         }
 
 
@@ -287,8 +287,6 @@ namespace DAS_Coursework.models
 
             }
 
-            Console.WriteLine($"delays are  {delays.Length}");
-
             return true;
         } 
 
@@ -408,5 +406,57 @@ namespace DAS_Coursework.models
 
             return tracks;
         }
+
+        public (Verticex, Edge[], string[]) GetVertexAndEdges(string vertexName)
+        {
+            Verticex vertex = null;
+            Edge[] connectingEdges = new Edge[edges.Length];
+            string[] uniqueLines = new string[edges.Length];
+            int edgeIndex = 0;
+            int uniqueLinesIndex = 0;
+
+            // Find the vertex by name
+            foreach (Verticex v in vertices)
+            {
+                if (v.Name == vertexName)
+                {
+                    vertex = v;
+                    break;
+                }
+            }
+
+            // Find the edges connecting to the vertex and collect unique lines
+            foreach (Edge edge in edges)
+            {
+                if (edge.fromVerticex == vertex || edge.toVerticex == vertex)
+                {
+                    connectingEdges[edgeIndex++] = edge;
+
+                    // Check if the line name is already in the uniqueLines array
+                    bool lineExists = false;
+                    for (int i = 0; i < uniqueLinesIndex; i++)
+                    {
+                        if (uniqueLines[i] == edge.line)
+                        {
+                            lineExists = true;
+                            break;
+                        }
+                    }
+
+                    // If the line name is not already in the uniqueLines array, add it
+                    if (!lineExists)
+                    {
+                        uniqueLines[uniqueLinesIndex++] = edge.line;
+                    }
+                }
+            }
+
+            // Resize arrays to remove any unused slots
+            Array.Resize(ref connectingEdges, edgeIndex);
+            Array.Resize(ref uniqueLines, uniqueLinesIndex);
+
+            return (vertex, connectingEdges, uniqueLines);
+        }
+
     }
 }

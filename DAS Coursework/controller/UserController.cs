@@ -33,31 +33,57 @@ namespace DAS_Coursework.controller
 
         public static void GetDisplayInformationMenu()
         {
-            //TODO: fetch these stations from the models
-            //string[] LineOptions = new[]{
-            //        "Wembley Station",
-            //        "Baker Street",
-            //        "Go Back"
-            //};
+         
 
-            //int response = MenuDisplay.GetMenu(LineOptions, new[] { "Display information about a station", "Please select the station you want to view:" });
+            AnsiConsole.Clear();
+            TitleCreator.GetTitle();
+            string[] StationOptions = MainController.graph.GetAllVertexNames().Append("Cancel").ToArray();
+            var station = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("Find A Route \nPlease select your station?")
+                        .PageSize(20)
+                        .MoreChoicesText("[grey](Move up and down to reveal more stations)[/]")
+                        .AddChoices(StationOptions));
 
-            //if (response == 2)
-            //{
-            //    GetUserMenu();
-            //}
-            //else
-            //{
-            //    DisplayStation(LineOptions[response]);
-            //}
+            if (station == "Cancel")
+            {
+                GetUserMenu();
+                return;
+            }
 
-            Dijkstra.ShortestPath(MainController.graph, MainController.graph.FindVertexByName("MARBLE ARCH"), MainController.graph.FindVertexByName("GREAT PORTLAND STREET"));
+
+            AnsiConsole.Clear();
+            TitleCreator.GetTitle();
+            Console.WriteLine($"\nBelow is the information about {station} station\n");
+            var response = MainController.graph.GetVertexAndEdges(station);
+
+            Console.WriteLine($"Station Name: {response.Item1.Name}\n");
+            Console.WriteLine("Train Lines available:");
+            for(var i = 0; i < response.Item3.Length; i++)
+            {
+                Console.WriteLine($"{i+1}. {response.Item3[i]}");
+            }
+            Console.WriteLine();
+            Console.WriteLine("This station connects to or is connected to:");
+            for (var i = 0; i < response.Item2.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {response.Item2[i].fromVerticex.Name} -> {response.Item2[i].toVerticex.Name} {response.Item2[i].line}({response.Item2[i].direction}) (Journey time: {response.Item2[i].weight} mins{(response.Item2[i].delay>0 ?$" + Delay: {response.Item2[i].delay} min":"")})");
+            }
+
+            Console.WriteLine("\nPress enter to go back");
+            ConsoleKey pressedKey = Console.ReadKey().Key;
+
+            if (pressedKey == ConsoleKey.Enter)
+            {
+                GetUserMenu();
+                return;
+            }
         }
 
 
         public static void DisplayStation(string station)
         {
-            Console.Clear();
+            AnsiConsole.Clear();
             TitleCreator.GetTitle();
 
             Console.WriteLine("");
@@ -74,6 +100,7 @@ namespace DAS_Coursework.controller
             if (pressedKey == ConsoleKey.Enter)
             {
                 GetUserMenu();
+                return;
             }
 
         }

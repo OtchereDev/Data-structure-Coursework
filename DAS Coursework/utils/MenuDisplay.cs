@@ -1,4 +1,6 @@
 ﻿using System;
+using Spectre.Console;
+
 namespace DAS_Coursework.utils
 {
     public static class MenuDisplay
@@ -29,7 +31,7 @@ namespace DAS_Coursework.utils
 
         static void UpdateMenu(int index, string[] options, string[] messages)
         {
-            Console.Clear();
+            AnsiConsole.Clear();
             TitleCreator.GetTitle();
 
             foreach (var message in messages)
