@@ -8,17 +8,11 @@ class Program
 {
     static void Main(string[] args)
     {
-        //MainController.Init();
 
-        //MainController.GetMainMain();
+        MainController.Init();
 
-        var summary = BenchmarkRunner.Run<DijkstraBenchmark>(new CustomConfig());
+        MainController.GetMainMain();
 
-
-        //string source = "WEMBLEY PARK";
-        //string destination = "PADDINGTON (H&C)";
-
-        //Dijkstra.ShortestPath(graph, graph.FindVertexByName("WEMBLEY PARK"), graph.FindVertexByName("LONDON BRIDGE"));
     }
 
 }
