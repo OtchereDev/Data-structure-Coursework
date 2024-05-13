@@ -1,13 +1,19 @@
 ﻿namespace DAS_Coursework;
+
+using BenchmarkDotNet.Running;
 using controller;
+using DAS_Coursework.utils;
 
 class Program
 {
     static void Main(string[] args)
     {
-        MainController.Init();
+        //MainController.Init();
 
-        MainController.GetMainMain();
+        //MainController.GetMainMain();
+
+        var summary = BenchmarkRunner.Run<DijkstraBenchmark>(new CustomConfig());
+
 
         //string source = "WEMBLEY PARK";
         //string destination = "PADDINGTON (H&C)";
