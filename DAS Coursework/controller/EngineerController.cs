@@ -61,7 +61,7 @@ namespace DAS_Coursework.controller
             AnsiConsole.Clear();
             utils.TitleCreator.GetTitle();
             AnsiConsole.WriteLine($"Add A Journey Delay\n \nPlease select your starting station of the journey delay: \n");
-            string[] StationOptions = MainController.graph.VerticesConnectedToLine(LineOptions[start]).Append("Cancel").ToArray();
+            string[] StationOptions = MainController.graph.VerticesConnectedToLine(LineOptions[start].Trim()).Append("Cancel").ToArray();
             string startStation = AnsiConsole.Prompt(
                   new SelectionPrompt<string>()
                       .Title($"Selected Line: ({LineOptions[start]})")

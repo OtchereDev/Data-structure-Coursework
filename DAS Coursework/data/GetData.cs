@@ -73,10 +73,10 @@ namespace DAS_Coursework.data
 
             foreach (var line in allLines)
             {
-                if (!lines.Contains(line))
+                if (!lines.Contains(line.Trim()))
                 {
                     Array.Resize(ref lines, count + 1);
-                    lines[count++] = line;
+                    lines[count++] = line.Trim();
 
                 }
             }
