@@ -59,15 +59,18 @@ namespace DAS_Coursework.utils
             {
                 Verticex prevVertex = predecessors[Array.IndexOf(graph.vertices, currentVertex)];
                 Edge connectingEdge = edgePredecessors[Array.IndexOf(graph.vertices, currentVertex)];
-                if(pathIndex == 0)
+                if(pathIndex == 0 && connectingEdge != null)
                 {
                    
                     endLine = connectingEdge.line;
                     endDir = connectingEdge.direction;
                 }
 
-
-                path[pathIndex++] = $"{connectingEdge.line} ({connectingEdge.direction}): {connectingEdge.fromVerticex.Name} to {connectingEdge.toVerticex.Name} {connectingEdge.weight}min";
+                if (connectingEdge != null)
+                {
+                    path[pathIndex++] = $"{connectingEdge.line} ({connectingEdge.direction}): {connectingEdge.fromVerticex.Name} to {connectingEdge.toVerticex.Name} {connectingEdge.weight}min";
+                }
+               
 
                 // Check for line change
                 if (edgePredecessors[Array.IndexOf(graph.vertices, currentVertex)] != null)
@@ -86,8 +89,12 @@ namespace DAS_Coursework.utils
                     return;
                 }
 
-                startDir = connectingEdge.direction;
-                startLine = connectingEdge.line;
+                if (connectingEdge != null)
+                {
+                    startDir = connectingEdge.direction;
+                    startLine = connectingEdge.line;
+                }
+                 
             }
             path[pathIndex++] = $"Start: {source.Name}, {startLine} ({startDir})";
 
